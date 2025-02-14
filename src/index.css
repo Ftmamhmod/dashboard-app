@@ -1,0 +1,7 @@
+
+body {
+  margin: 0;
+  background-color: #f5f6fa;
+  font-family: 'Cairo', sans-serif; /* للدعم العربي */
+  direction: rtl; /* للنصوص العربية */
+}

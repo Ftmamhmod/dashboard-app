@@ -1,0 +1,27 @@
+{
+    "dashboard": {
+      "title": "Dashboard",
+      "clients": "Clients",
+      "conversions": "Conversions",
+      "users": "Users",
+      "back": "Back to Dashboard"
+    },
+    "clients": {
+      "title": "Clients Details",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "conversions": {
+      "title": "Conversions Details",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status"
+    },
+    "users": {
+      "title": "Users Details",
+      "name": "Name",
+      "role": "Role",
+      "joinDate": "Join Date"
+    }
+  }
