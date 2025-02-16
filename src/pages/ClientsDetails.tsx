@@ -1,8 +1,23 @@
-// src/pages/ClientsDetails.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Swal from 'sweetalert2'; // تأكيد الحذف
+import Swal from 'sweetalert2';
+import {
+  Container,
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface Client {
   id: number;
@@ -17,9 +32,9 @@ const ClientsDetails: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([
     { id: 1, name: 'Client 1', email: 'client1@example.com', phone: '123456789' },
     { id: 2, name: 'Client 2', email: 'client2@example.com', phone: '987654321' },
+    { id: 3, name: 'Client 3', email: 'client3@example.com', phone: '987654321' },
   ]);
 
-  // دالة حذف العميل
   const handleDelete = (id: number) => {
     Swal.fire({
       title: t('clients.deleteConfirm'),
@@ -44,72 +59,59 @@ const ClientsDetails: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1>{t('clients.title')}</h1>
-      <button onClick={() => navigate('/')} style={styles.backButton}>
-        {t('dashboard.back')}
-      </button>
-      <div style={styles.tableContainer}>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th>{t('clients.name')}</th>
-              <th>{t('clients.email')}</th>
-              <th>{t('clients.phone')}</th>
-              <th>{t('clients.actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clients.map((client) => (
-              <tr key={client.id}>
-                <td>{client.name}</td>
-                <td>{client.email}</td>
-                <td>{client.phone}</td>
-                <td>
-                  <button 
-                    onClick={() => handleDelete(client.id)}
-                    style={styles.deleteButton}
-                  >
-                    {t('clients.delete')}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4" component="h1">
+          {t('clients.title')}
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/')}
+          sx={{ textTransform: 'none' }}
+        >
+          {t('dashboard.back')}
+        </Button>
+      </Box>
 
-// إضافة الأنماط الجديدة
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: '20px',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  tableContainer: {
-    overflowX: 'auto',
-    marginTop: '20px',
-  },
-  deleteButton: {
-    backgroundColor: '#ff4444',
-    color: 'white',
-    border: 'none',
-    padding: '5px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  backButton: {
-    backgroundColor: '#3085d6',
-    color: 'white',
-    border: 'none',
-    padding: '5px 10px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '20px',
-  },
+      <TableContainer component={Paper} sx={{ maxHeight: 'calc(100vh - 200px)', overflowX: 'auto' }}>
+        <Table stickyHeader aria-label="clients table">
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('clients.name')}</TableCell>
+              <TableCell>{t('clients.email')}</TableCell>
+              <TableCell>{t('clients.phone')}</TableCell>
+              <TableCell align="center">{t('clients.actions')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {clients.map((client) => (
+              <TableRow
+                key={client.id}
+                hover
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {client.name}
+                </TableCell>
+                <TableCell>{client.email}</TableCell>
+                <TableCell>{client.phone}</TableCell>
+                <TableCell align="center">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDelete(client.id)}
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
+  );
 };
 
 export default ClientsDetails;
